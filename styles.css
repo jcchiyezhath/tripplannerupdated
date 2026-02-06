@@ -76,3 +76,43 @@ h2{
   .col-6, .col-12{ grid-column: span 12; }
 }
 
+/* ---------- Mobile Optimization ---------- */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+
+  nav {
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  nav a {
+    display: inline-block;
+    padding: 8px 6px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr; /* stack cards */
+    gap: 16px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}
+
