@@ -56,3 +56,23 @@ p{ color: var(--muted); margin: 0; }
   h1{ font-size: 26px; }
   nav{ padding: 12px; }
 }
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.col-6{ grid-column: span 6; }
+.col-12{ grid-column: span 12; }
+
+h2{
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+@media (max-width: 900px){
+  .col-6, .col-12{ grid-column: span 12; }
+}
+
