@@ -1,48 +1,39 @@
-const DASHBOARD_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQlvP8j5dZDbEghxDiom6ByE62ccsp7NNCAa4HrPw58dp4_8A3WKZHqOFFIVMDNoeITTh8CPJbTUvDH/pub?gid=0&single=true&output=csv";
-function csvToRows(csvText) {
-  return csvText.trim().split("\n").map(line =>
-    line.split(",").map(cell => cell.replace(/^"|"$/g, "").trim())
-  );
-}
+const DASHBOARD_CSV_URL =
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQlvP8j5dZDbEghxDiom6ByE62ccsp7NNCAa4HrPw58dp4_8A3WKZHqOFFIVMDNoeITTh8CPJbTUvDH/pub?gid=0&single=true&output=csv";
 
-async function loadDashboard() {
-  const res = await fetch(DASHBOARD_CSV_URL, { cache: "no-store" });
-  const text = await res.text();
-  const rows = csvToRows(text);
-
-  // expects 2 columns: Key, Value
+function parseCSV(text) {
+  const lines = text.trim().split("\n");
   const data = {};
-  for (let i = 1; i < rows.length; i++) {
-    const key = rows[i][0];
-    const val = rows[i][1];
-    if (key) data[key] = val;
+  for (let i = 1; i < lines.length; i++) {
+    const [key, value] = lines[i].split(",");
+    data[key.trim()] = value?.trim() || "";
   }
-
-  // fill placeholders (these IDs must exist in index.html)
-  const set = (id, value) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = value || "—";
-  };
-
-  set("trip_name", data.trip_name);
-  set("dates", `${data.start_date || ""} to ${data.end_date || ""}`.trim());
-  set("destination", data.destination);
-  set("confirmed_people", data.confirmed_people);
-  set("estimated_total_cost", data.estimated_total_cost);
-  set("per_person_cost", data.per_person_cost);
-  set("primary_stay", data.primary_stay);
-  set("primary_address", data.primary_address);
-
-  const mapEl = document.getElementById("maps_link");
-  if (mapEl) {
-    if (data.maps_link) {
-      mapEl.href = data.maps_link;
-      mapEl.textContent = "Open in Google Maps";
-    } else {
-      mapEl.removeAttribute("href");
-      mapEl.textContent = "—";
-    }
-  }
+  return data;
 }
 
-loadDashboard().catch(console.error);
+fetch(DASHBOARD_CSV_URL)
+  .then((res) => res.text())
+  .then((csv) => {
+    const data = parseCSV(csv);
+
+    document.getElementById("trip-overview").innerHTML = `
+      <strong>${data.trip_name}</strong><br>
+      ${data.start_date} → ${data.end_date}<br>
+      Destination: ${data.destination}<br>
+      People confirmed: ${data.confirmed_people}
+    `;
+
+    document.getElementById("stay-location").innerHTML = `
+      ${data.primary_stay}<br>
+      ${data.primary_address}<br>
+      <a href="${data.maps_link}" target="_blank">Open in Google Maps</a>
+    `;
+
+    document.getElementById("cost-summary").innerHTML = `
+      Total: $${data.estimated_total_cost}<br>
+      Per person: $${data.per_person_cost}
+    `;
+  })
+  .catch((err) => {
+    console.error("Dashboard CSV error:", err);
+  });
