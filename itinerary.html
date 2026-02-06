@@ -6,10 +6,8 @@
   <title>Trip Planner – Itinerary</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
-
 <body>
   <div class="container">
-
     <nav>
       <a href="./index.html">Dashboard</a> |
       <a href="./itinerary.html">Itinerary</a> |
@@ -21,8 +19,12 @@
     <hr>
 
     <h1>Itinerary</h1>
-    <p>Daily plan and schedule will appear here.</p>
+    <p>Auto-loaded from Google Sheet.</p>
 
+    <div id="itinerary-list" class="grid"></div>
+    <p id="itinerary-error" style="display:none;"></p>
   </div>
+
+  <script src="./itinerary.js"></script>
 </body>
 </html>
