@@ -2,12 +2,22 @@ const DASHBOARD_CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQlvP8j5dZDbEghxDiom6ByE62ccsp7NNCAa4HrPw58dp4_8A3WKZHqOFFIVMDNoeITTh8CPJbTUvDH/pub?gid=0&single=true&output=csv";
 
 function parseCSV(text) {
-  const lines = text.trim().split("\n");
+  const lines = text.trim().split(/\r?\n/); // handles Windows line breaks
   const data = {};
+
   for (let i = 1; i < lines.length; i++) {
-    const [key, value] = lines[i].split(",");
-    data[key.trim()] = value?.trim() || "";
+    const line = lines[i];
+
+    // split ONLY on the first comma
+    const firstCommaIndex = line.indexOf(",");
+    if (firstCommaIndex === -1) continue;
+
+    const key = line.slice(0, firstCommaIndex).trim().replace(/^"|"$/g, "");
+    const value = line.slice(firstCommaIndex + 1).trim().replace(/^"|"$/g, "");
+
+    data[key] = value;
   }
+
   return data;
 }
 
