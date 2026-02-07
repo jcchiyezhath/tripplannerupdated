@@ -8,6 +8,7 @@
 }
 
 *{ box-sizing:border-box; }
+
 body{
   margin:0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -21,31 +22,31 @@ body{
   padding: 18px 14px 50px;
 }
 
+/* ---------- CLEAN NAV (NO PILLS) ---------- */
 nav{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  padding:10px;
-  border-radius:14px;
+  padding:12px 14px;
+  border-radius:16px;
   border:1px solid rgba(0,0,0,.08);
   background:#fff;
+  font-weight:600;
 }
 
 nav a{
   text-decoration:none;
-  padding:8px 10px;
-  border-radius:999px;
-  border:1px solid rgba(0,0,0,.10);
-  font-size:14px;
+  color:inherit;
 }
-
 
 nav a:hover{
-  text-decoration: underline;
+  text-decoration:underline;
 }
 
-hr{ border:0; border-top:1px solid var(--border); margin: 14px 0; }
+hr{
+  border:0;
+  border-top:1px solid var(--border);
+  margin:14px 0;
+}
 
+/* ---------- CARDS ---------- */
 .card{
   background: var(--card);
   border: 1px solid var(--border);
@@ -54,127 +55,47 @@ hr{ border:0; border-top:1px solid var(--border); margin: 14px 0; }
   padding: 16px;
 }
 
-h1{ font-size: 30px; margin: 14px 0 8px; }
-p{ color: var(--muted); margin: 0; }
-
-@media (max-width: 700px){
-  h1{ font-size: 26px; }
-  nav{ padding: 12px; }
+h1{
+  font-size:30px;
+  margin:14px 0 8px;
 }
 
+h2{
+  margin:0 0 8px;
+  font-size:16px;
+}
+
+p{
+  color: var(--muted);
+  margin:0;
+}
+
+/* ---------- GRID ---------- */
 .grid{
-  display: grid;
+  display:grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: 14px;
-  margin-top: 14px;
+  gap:14px;
+  margin-top:14px;
 }
 
 .col-6{ grid-column: span 6; }
 .col-12{ grid-column: span 12; }
 
-h2{
-  margin: 0 0 8px;
-  font-size: 16px;
-}
-
-@media (max-width: 900px){
-  .col-6, .col-12{ grid-column: span 12; }
-}
-
-/* ---------- Mobile Optimization ---------- */
-@media (max-width: 768px) {
-  body {
-    font-size: 16px;
-  }
-
-  nav {
-    text-align: center;
-    font-size: 16px;
-    line-height: 1.6;
-  }
-
-  nav a {
-    display: inline-block;
-    padding: 8px 6px;
-  }
-
-  .grid {
-    grid-template-columns: 1fr; /* stack cards */
-    gap: 16px;
-  }
-
-  .card {
-    padding: 16px;
-  }
-
-  h1 {
-    font-size: 24px;
-  }
-
-  h2 {
-    font-size: 18px;
-  }
-
-  p {
-    font-size: 15px;
-    line-height: 1.6;
-  }
-}
-
-/* Updates list polish */
+/* ---------- UPDATES ---------- */
 #latest-updates > div{
-  padding: 12px 0 !important;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
 }
 
 #latest-updates > div:last-child{
-  border-bottom: none !important;
+  border-bottom:none;
 }
 
-#latest-updates a{
-  display: inline-block;
-  margin-top: 6px;
-  padding: 8px 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(0,0,0,.12);
-  text-decoration: none;
+/* ---------- MOBILE ---------- */
+@media (max-width: 900px){
+  .col-6,.col-12{ grid-column: span 12; }
 }
 
-nav{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  padding:10px;
-  border-radius:16px;
-  border:1px solid rgba(0,0,0,.08);
-  background:#fff;
+@media (max-width: 768px){
+  h1{ font-size:24px; }
 }
-
-nav a{
-  text-decoration:none;
-  padding:8px 12px;
-  border-radius:999px;
-  border:1px solid rgba(0,0,0,.10);
-  color:inherit;
-  background:rgba(0,0,0,.02);
-}
-
-nav a:hover{
-  background:rgba(0,0,0,.05);
-}
-
-/* Clean simple top navigation */
-.top-nav{
-  font-weight:600;
-  padding:6px 0;
-}
-
-.top-nav a{
-  text-decoration:none;
-  color:inherit;
-  margin:0 4px;
-}
-
-.top-nav a:hover{
-  text-decoration:underline;
-}
-
